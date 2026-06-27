@@ -275,7 +275,3 @@ If you found this project helpful,
 It helps support the project and motivates future development.
 
 ---
-
-## 📷 Preview
-
-> Add screenshots or GIFs of your homepage, dashboard, charging map, and wallet here to showcase the project visually.
