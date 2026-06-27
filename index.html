@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChargeMate | Premium EV Charging Platform</title>
+    <meta name="description" content="Intelligent EV charging hardware and charging network. Fast, reliable, and premium charging for the next generation of mobility.">
+    <link rel="canonical" href="https://chargemate-ev.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chargemate-ev.com/">
+    <meta property="og:title" content="ChargeMate | Premium EV Charging Platform">
+    <meta property="og:description" content="Intelligent EV charging hardware and charging network. Fast, reliable, and premium charging for the next generation of mobility.">
+    <meta property="og:image" content="assets/images/byd-blue.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://chargemate-ev.com/">
+    <meta name="twitter:title" content="ChargeMate | Premium EV Charging Platform">
+    <meta name="twitter:description" content="Intelligent EV charging hardware and charging network. Fast, reliable, and premium charging for the next generation of mobility.">
+    <meta name="twitter:image" content="assets/images/byd-blue.png">
+
+    <!-- Preload Critical Above-The-Fold Assets (LCP) -->
+    <link rel="preload" as="image" href="assets/images/byd-blue.png" fetchpriority="high">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23FF6B4A%22/><path d=%22M50 25 L35 55 L47 55 L45 75 L65 45 L53 45 Z%22 fill=%22white%22/></svg>">
+    <!-- Theme Initialization to prevent Flash of Unstyled Content (FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('chargemate_theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+
+</head>
+<body class="loading-lock">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span class="logo-dot"></span>
+                <span>ChargeMate</span>
+            </div>
+            <div class="loader-status">Initializing Telemetry...</div>
+            <div class="loader-bar-container">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span class="logo-dot"></span>
+                <span>ChargeMate</span>
+            </a>
+            
+            <nav class="main-nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#chargers" class="nav-link">Hardware</a>
+                <a href="#map" class="nav-link">Network</a>
+                <a href="#dashboard" class="nav-link">Console</a>
+                <a href="#app" class="nav-link">App</a>
+            </nav>
+
+            <div class="header-actions">
+                <!-- Theme Switcher Toggle -->
+                <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light or dark theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                </button>
+                <!-- Unauthorized State -->
+                <button class="btn btn-outline btn-sm auth-trigger" id="btn-login-trigger">Sign In</button>
+                
+                <div class="user-profile" id="user-profile-menu" style="display: none;">
+                    <button class="profile-badge" id="profile-menu-button" aria-label="User menu">
+                        <span class="avatar-letter">U</span>
+                        <img class="avatar-image" src="" alt="Profile Image" style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </button>
+                    <div class="dropdown-menu" id="profile-dropdown">
+                        <div class="dropdown-header">
+                            <span class="user-name">Alex Rivera</span>
+                            <span class="user-email">alex@chargemate.com</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#reserve" class="dropdown-item">My Bookings</a>
+                        <a href="#map" class="dropdown-item">Favorite Stations</a>
+                        <a href="#" class="dropdown-item" id="btn-profile-settings">Profile Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item logout-btn" id="btn-logout">Sign Out</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer">
+        <nav class="mobile-nav">
+            <a href="#home" class="mobile-link">Home</a>
+            <a href="#chargers" class="mobile-link">Hardware</a>
+            <a href="#map" class="mobile-link">Network</a>
+            <a href="#dashboard" class="mobile-link">Console</a>
+            <a href="#app" class="mobile-link">App</a>
+            <div class="mobile-divider"></div>
+            <button class="btn btn-outline btn-full auth-trigger" id="mobile-login-trigger">Sign In</button>
+        </nav>
+    </div>
+
+    <!-- Auth Modal Popup -->
+    <div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Authentication modal">
+        <div class="auth-card">
+            <button class="auth-close" aria-label="Close modal">&times;</button>
+            
+            <div class="auth-header">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="signin">Sign In</button>
+                    <button class="auth-tab" data-tab="register">Register</button>
+                </div>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signin-form" class="auth-form active">
+                <h3 class="auth-title">Welcome back</h3>
+                <p class="auth-subtitle">Access your ChargeMate dashboard and public network passes.</p>
+                
+                <div class="form-group floating-label-group">
+                    <input type="email" id="login-email" required placeholder=" " autocomplete="email">
+                    <label for="login-email">Email Address</label>
+                </div>
+
+                <div class="form-group floating-label-group">
+                    <input type="password" id="login-password" required placeholder=" " autocomplete="current-password">
+                    <label for="login-password">Password</label>
+                </div>
+                
+                <div class="form-helper">
+                    <label class="checkbox-container">
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                        Keep me signed in
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Sign In</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form">
+                <h3 class="auth-title">Create account</h3>
+                <p class="auth-subtitle">Start your intelligent EV charging experience today.</p>
+                
+                <div class="form-group floating-label-group">
+                    <input type="text" id="reg-name" required placeholder=" ">
+                    <label for="reg-name">Full Name</label>
+                </div>
+
+                <div class="form-group floating-label-group">
+                    <input type="email" id="reg-email" required placeholder=" " autocomplete="email">
+                    <label for="reg-email">Email Address</label>
+                </div>
+
+                <div class="form-group floating-label-group">
+                    <input type="password" id="reg-password" required placeholder=" " autocomplete="new-password">
+                    <label for="reg-password">Password</label>
+                </div>
+
+                <div class="form-group">
+                    <select id="reg-car" class="custom-select">
+                        <option value="" disabled selected>Select your Electric Vehicle</option>
+                        <option value="byd-seal">BYD Seal</option>
+                        <option value="byd-han">BYD Han</option>
+                        <option value="tesla-model-y">Tesla Model Y</option>
+                        <option value="audi-etron">Audi e-tron GT</option>
+                        <option value="taycan">Porsche Taycan</option>
+                        <option value="other">Other Electric Vehicle</option>
+                    </select>
+                </div>
+                
+                <div class="form-helper">
+                    <label class="checkbox-container">
+                        <input type="checkbox" required>
+                        <span class="checkmark"></span>
+                        I agree to the Terms of Service and Privacy Policy
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Create Account</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main>
+        
+        <!-- HERO SECTION -->
+        <section id="home" class="hero-section">
+            <canvas id="ambient-particles" class="ambient-particles"></canvas>
+            <div class="parallax-scroll hero-glow-orb-1" data-parallax-speed="0.1" data-parallax-dir="down"></div>
+            <div class="parallax-scroll hero-glow-orb-2" data-parallax-speed="0.06" data-parallax-dir="up"></div>
+            <div class="container hero-grid">
+                <div class="hero-content reveal-on-scroll">
+                    <div class="badge-pill">ChargeMate EV</div>
+                    <h1 class="hero-title">Powering the<br><span class="hero-title-gradient">Next Era of Mobility</span></h1>
+                    <p class="hero-description">Sleek hardware meets intelligent charging grids. Re-energize your vehicle at home or access our ultra-fast network, engineered to fit the pace of your life.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-num" id="hero-stat-speed">350 kW</span>
+                            <span class="stat-label">Max Power Output</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num" id="hero-stat-time">12 min</span>
+                            <span class="stat-label">0 to 80% Charge</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">99.9%</span>
+                            <span class="stat-label">Grid Uptime</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="#reserve" class="btn btn-primary">Reserve Charger</a>
+                        <a href="#map" class="btn btn-secondary">Explore Stations</a>
+                    </div>
+
+                    <div class="hero-trust-badges">
+                        <span class="trust-title">Compatible with all EV Brands</span>
+                        <div class="trust-logos">
+                            <span>Tesla</span>
+                            <span class="dot-sep">&bull;</span>
+                            <span>Porsche</span>
+                            <span class="dot-sep">&bull;</span>
+                            <span>Rivian</span>
+                            <span class="dot-sep">&bull;</span>
+                            <span>Lucid</span>
+                            <span class="dot-sep">&bull;</span>
+                            <span>Audi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile spacer: guarantees gap between buttons and image -->
+                <div class="hero-gap" aria-hidden="true"></div>
+
+                <div class="hero-visual reveal-on-scroll delay-1">
+                    <div class="hero-studio-glow"></div>
+                    <div class="hero-image-container">
+                        <img src="assets/images/byd-blue.png" alt="Metallic Blue BYD Seal connected to ChargeMate Charger" class="hero-img active" id="hero-image-blue" width="1024" height="1024" fetchpriority="high">
+                        <img src="assets/images/byd-grey.png" alt="Space Grey BYD Han connected to ChargeMate Charger" class="hero-img" id="hero-image-grey" width="1024" height="1024" loading="lazy">
+                        <img src="assets/images/byd-white.png" alt="Premium White BYD Han connected to ChargeMate Charger" class="hero-img" id="hero-image-white" width="1024" height="1024" loading="lazy">
+                        
+                        <!-- Floating Glass Cards -->
+                        <div class="glass-card card-status">
+                            <div class="pulsing-dot-container">
+                                <span class="pulse-dot animate-pulse"></span>
+                            </div>
+                            <div class="card-details">
+                                <span class="card-title">ChargeMate Pro</span>
+                                <span class="card-value text-teal" id="live-power-output">Active &bull; 120 kW</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card card-battery">
+                            <svg class="battery-svg" viewBox="0 0 24 24">
+                                <rect x="2" y="6" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <path d="M20 10V14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <rect id="battery-fill-rect" x="5" y="9" width="10" height="6" fill="var(--clr-accent)" />
+                            </svg>
+                            <div class="card-details">
+                                <span class="card-title" id="hero-car-model">BYD Seal</span>
+                                <span class="card-value" id="live-battery-percent">78% Charged</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Car / Finish Customization Controls -->
+                    <div class="visual-controls">
+                        <span class="controls-label">Select Color & Model</span>
+                        <div class="control-buttons">
+                            <button class="color-dot active" data-color="blue" title="Metallic Blue BYD Seal" style="background-color: #3b5a85;"></button>
+                            <button class="color-dot" data-color="grey" title="Space Grey BYD Han" style="background-color: #55585d;"></button>
+                            <button class="color-dot" data-color="white" title="Premium White BYD Han" style="background-color: #e3e6ea;"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHARGERS SECTION -->
+        <section id="chargers" class="chargers-section bg-light">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Charging Hardware</span>
+                    <h2 class="section-title reveal-fade-up">Engineered to Perform</h2>
+                    <p class="section-subtitle">Sleek, powerful charging hardware for home and public networks.</p>
+                </div>
+
+                <div class="chargers-grid">
+                    <!-- Charger 1: ChargeMate Pro -->
+                    <div class="charger-card reveal-on-scroll">
+                        <div class="charger-visual">
+                            <div class="charger-image-wrapper">
+                                <img id="charger-pro-img" src="assets/images/charger-pro-silver.png" alt="ChargeMate Pro Arctic Silver Finish" class="charger-img" loading="lazy" width="600" height="900">
+                                <div class="image-overlay-vignette"></div>
+                            </div>
+                            <!-- Finish Toggles -->
+                            <div class="finish-selector">
+                                <span class="finish-dot active" data-finish="silver" style="background-color: #cbd5e1;" title="Arctic Silver"></span>
+                                <span class="finish-dot" data-finish="dark" style="background-color: #334155;" title="Space Charcoal"></span>
+                                <span class="finish-dot" data-finish="coral" style="background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark, #B8935E));" title="ChargeMate Coral"></span>
+                            </div>
+                        </div>
+                        <div class="charger-info">
+                            <span class="badge-mini text-coral">For Home & Fleet</span>
+                            <h3 class="charger-name">ChargeMate Pro</h3>
+                            <p class="charger-desc">Compact, smart AC charger delivering high-capacity speeds. Perfect for garages, residential parking, and work sites.</p>
+                            <ul class="charger-specs">
+                                <li><strong>Output:</strong> Up to 22 kW</li>
+                                <li><strong>Connectivity:</strong> Wi-Fi, Bluetooth, LTE</li>
+                                <li><strong>Cable:</strong> 25 ft lightweight braided cable</li>
+                                <li><strong>Protection:</strong> IP66 Weatherproof, IK10 Impact</li>
+                            </ul>
+                            <a href="#reserve" class="btn btn-outline btn-full">Order Home Unit</a>
+                        </div>
+                    </div>
+
+                    <!-- Charger 2: ChargeMate Ultra -->
+                    <div class="charger-card premium-card reveal-on-scroll delay-1">
+                        <div class="charger-visual">
+                            <div class="charger-image-wrapper">
+                                <img src="assets/images/charger-ultra.png" alt="ChargeMate Ultra Charging Station" class="charger-img" loading="lazy" width="600" height="900">
+                                <div class="image-overlay-vignette"></div>
+                            </div>
+                        </div>
+                        <div class="charger-info">
+                            <span class="badge-mini bg-coral text-white">For Public Grids</span>
+                            <h3 class="charger-name">ChargeMate Ultra</h3>
+                            <p class="charger-desc">Our flagship liquid-cooled DC fast charger. Engineered for rapid highway stops, commercial logistics, and municipal charging plazas.</p>
+                            <ul class="charger-specs">
+                                <li><strong>Output:</strong> Up to 380 kW</li>
+                                <li><strong>Charging Speed:</strong> 0 to 80% in 12 minutes</li>
+                                <li><strong>Cables:</strong> Dual liquid-cooled CCS2 / MCS</li>
+                                <li><strong>Grid:</strong> Integrated energy storage buffers</li>
+                            </ul>
+                            <a href="#reserve" class="btn btn-primary btn-full">Partner With Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAVINGS & SPEED CALCULATOR -->
+        <section id="calculator" class="calculator-section">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Charging Analytics</span>
+                    <h2 class="section-title reveal-fade-up">Speed & Savings Calculator</h2>
+                    <p class="section-subtitle">Compute your savings and see how quickly you offset emissions.</p>
+                </div>
+
+                <div class="calc-grid reveal-on-scroll">
+                    <!-- Calculator Inputs -->
+                    <div class="calc-inputs card-panel">
+                        <h3 class="panel-title">Configure Your Drive</h3>
+                        
+                        <div class="form-group">
+                            <label for="calc-vehicle" class="field-label">Your Electric Vehicle</label>
+                            <select id="calc-vehicle" class="custom-select">
+                                <option value="byd-seal" selected>BYD Seal (82.5 kWh)</option>
+                                <option value="byd-han">BYD Han (85.4 kWh)</option>
+                                <option value="tesla-model-y">Tesla Model Y (75.0 kWh)</option>
+                                <option value="audi-etron">Audi e-tron GT (95.0 kWh)</option>
+                                <option value="taycan">Porsche Taycan (93.4 kWh)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="slider-header">
+                                <label for="calc-distance" class="field-label">Daily Driving Distance</label>
+                                <span class="slider-value" id="distance-val">40 mi</span>
+                            </div>
+                            <input type="range" id="calc-distance" min="5" max="150" step="5" value="40" class="range-slider">
+                            <div class="slider-labels">
+                                <span>5 mi</span>
+                                <span>150 mi</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="field-label">Charging Source</label>
+                            <div class="source-toggles">
+                                <label class="source-toggle-card active">
+                                    <input type="radio" name="calc-source" value="home-slow" checked>
+                                    <span class="source-details">
+                                        <span class="source-name">Home Outlet</span>
+                                        <span class="source-power">2.3 kW AC</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="source-toggle-card">
+                                    <input type="radio" name="calc-source" value="home-pro">
+                                    <span class="source-details">
+                                        <span class="source-name">ChargeMate Pro</span>
+                                        <span class="source-power">22 kW AC</span>
+                                    </span>
+                                </label>
+
+                                <label class="source-toggle-card">
+                                    <input type="radio" name="calc-source" value="ultra">
+                                    <span class="source-details">
+                                        <span class="source-name">ChargeMate Ultra</span>
+                                        <span class="source-power">350 kW DC</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculator Outputs -->
+                    <div class="calc-outputs">
+                        <div class="output-card gradient-glow">
+                            <div class="output-header">
+                                <span class="output-label">Estimated Charging Time</span>
+                                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                            </div>
+                            <div class="output-big-val" id="calc-time">35h 50m</div>
+                            <p class="output-desc" id="calc-time-desc">Estimated time to fully charge battery from empty.</p>
+                        </div>
+
+                        <div class="output-grid">
+                            <div class="output-card">
+                                <span class="output-label">Monthly Gas Savings</span>
+                                <span class="output-val" id="calc-savings">$184.20</span>
+                                <span class="output-badge text-green">VS Combustion Engines</span>
+                            </div>
+                            <div class="output-card">
+                                <span class="output-label">Annual CO&#x2082; Offset</span>
+                                <span class="output-val" id="calc-carbon">4.8 Tons</span>
+                                <span class="output-badge text-teal">Eco Impact Equivalent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIVE CHARGING MAP SECTION -->
+        <section id="map" class="map-section bg-light">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Public Network</span>
+                    <h2 class="section-title reveal-fade-up">Metropolitan Charging Grid</h2>
+                    <p class="section-subtitle">Find and reserve ultra-fast charging spots across our global grid.</p>
+                </div>
+
+                <div class="map-grid reveal-on-scroll">
+                    <!-- Map Sidebar / Search -->
+                    <div class="map-sidebar card-panel">
+                        <div class="search-box">
+                            <input type="text" id="map-search-input" placeholder="Search city (e.g. London, Munich, Austin)...">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                            <div class="search-autocomplete" id="search-results"></div>
+                        </div>
+
+                        <div class="city-selector-tabs">
+                            <button class="city-tab active" data-city="shenzhen">Shenzhen</button>
+                            <button class="city-tab" data-city="newyork">New York</button>
+                            <button class="city-tab" data-city="london">London</button>
+                            <button class="city-tab" data-city="munich">Munich</button>
+                            <button class="city-tab" data-city="austin">Austin</button>
+                        </div>
+
+                        <div class="station-list" id="sidebar-station-list">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Interactive Map Visual -->
+                    <div class="map-canvas-container card-panel">
+                        <div class="map-legend">
+                            <div class="legend-item"><span class="dot bg-teal"></span> Available</div>
+                            <div class="legend-item"><span class="dot bg-orange"></span> Charging</div>
+                            <div class="legend-item"><span class="dot bg-red"></span> Offline</div>
+                        </div>
+                        
+                        <!-- SVG Metropolitan Grid Mockup Map -->
+                        <div class="svg-map-wrapper">
+                            <svg id="metro-svg-map" class="metro-map-svg" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Grid Lines -->
+                                <defs>
+                                    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.5" />
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+                                
+                                <!-- Stylized City Roads/Layout (Background paths) -->
+                                <g id="map-roads" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" fill="none">
+                                    <!-- City streets will change via map.js -->
+                                </g>
+
+                                <!-- Charging Station Nodes (Pulsing circles) -->
+                                <g id="map-nodes">
+                                    <!-- Populated dynamically via JS -->
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Station Info Modal / overlay -->
+                        <div class="map-detail-panel" id="map-station-detail">
+                            <h4 id="detail-title">Shenzhen Bay Hub</h4>
+                            <p class="detail-address" id="detail-address">Binhai Avenue 1208, Nanshan District</p>
+                            <div class="detail-specs">
+                                <div class="spec">
+                                    <span class="label">Speed</span>
+                                    <span class="value" id="detail-speed">350 kW DC</span>
+                                </div>
+                                <div class="spec">
+                                    <span class="label">Plugs</span>
+                                    <span class="value" id="detail-plugs">4 / 6 Available</span>
+                                </div>
+                                <div class="spec">
+                                    <span class="label">Rate</span>
+                                    <span class="value" id="detail-rate">Â¥1.82/kWh</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-sm btn-full" id="btn-reserve-station">Reserve Charging Slot</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CONTROL CENTER DASHBOARD SECTION -->
+        <section id="dashboard" class="dashboard-section bg-light">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Live Telemetry</span>
+                    <h2 class="section-title reveal-fade-up">ChargeMate Control Center</h2>
+                    <p class="section-subtitle">Real-time telemetry, active session logs, and grid reservations.</p>
+                </div>
+
+                <div class="dashboard-wrapper">
+                    <!-- Locked Overlay (Hidden when logged in) -->
+                    <div class="dashboard-lock-overlay" id="dashboard-lock-overlay">
+                        <div class="lock-card">
+                            <div class="lock-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lock-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </div>
+                            <h3>Control Center Locked</h3>
+                            <p>Sign in to connect your vehicle, monitor live telemetry, manage charging speeds, and inspect your wallet balance.</p>
+                            <button class="btn btn-primary btn-sm auth-trigger">Sign In to Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Workspace -->
+                    <div class="dashboard-grid">
+                        
+                        <!-- COLUMN 1: LIVE VEHICLE TELEMETRY & CONTROLS -->
+                        <div class="dash-col dash-col-large">
+                            <!-- Widget 1 & 2 & 3: Active Charging Progress & Battery Status & Remaining Range -->
+                            <div class="dash-card main-gauge-card gradient-glow">
+                                <div class="card-header-clean">
+                                    <span class="widget-tag">Live Telemetry</span>
+                                    <span class="status-indicator active">
+                                        <span class="pulse-dot"></span>
+                                        <span id="dash-connection-status">Connected</span>
+                                    </span>
+                                </div>
+
+                                <div class="gauge-display-wrapper">
+                                    <div class="svg-gauge-container">
+                                        <svg viewBox="0 0 200 200" class="gauge-svg-large">
+                                            <circle cx="100" cy="100" r="85" class="gauge-bg-circle" />
+                                            <circle id="dash-battery-ring" cx="100" cy="100" r="85" class="gauge-progress-circle" stroke-dasharray="534" stroke-dashoffset="267" stroke-linecap="round" transform="rotate(-90 100 100)" />
+                                        </svg>
+                                        <div class="gauge-center-info">
+                                            <span class="percent-val" id="dash-battery-percent">50%</span>
+                                            <span class="percent-lbl" id="dash-battery-status">Charging</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gauge-meta-stats">
+                                        <div class="meta-item">
+                                            <span class="lbl">Remaining Range</span>
+                                            <span class="val" id="dash-remaining-range">284 mi</span>
+                                        </div>
+                                        <div class="meta-item border-l">
+                                            <span class="lbl">Target Charge</span>
+                                            <span class="val" id="dash-target-display">90%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Widget 13: Vehicle Status & Controls -->
+                            <div class="dash-card card-glass">
+                                <h4 class="widget-title">Vehicle Status & Control</h4>
+                                <div class="vehicle-info-grid">
+                                    <div class="info-block">
+                                        <span class="lbl">Model</span>
+                                        <span class="val text-highlight" id="dash-vehicle-name">BYD Seal</span>
+                                    </div>
+                                    <div class="info-block">
+                                        <span class="lbl">Locks</span>
+                                        <span class="val" id="dash-lock-state">Secured</span>
+                                    </div>
+                                    <div class="info-block">
+                                        <span class="lbl">Port Flap</span>
+                                        <span class="val text-teal" id="dash-port-state">Connected</span>
+                                    </div>
+                                    <div class="info-block">
+                                        <span class="lbl">Cabin Temp</span>
+                                        <span class="val" id="dash-cabin-temp">21.5&deg;C</span>
+                                    </div>
+                                </div>
+
+                                <div class="vehicle-actions-row">
+                                    <button class="btn btn-outline btn-sm btn-flex" id="btn-toggle-port-lock">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                        <span id="btn-text-port-lock">Unlock Port</span>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm btn-flex" id="btn-toggle-charging">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+                                        <span id="btn-text-charging">Pause Session</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 2: ACTIVE SESSION TELEMETRY & METRICS -->
+                        <div class="dash-col">
+                            <!-- Widget 4: Charging Speed -->
+                            <div class="dash-card card-glass">
+                                <div class="card-header-clean">
+                                    <span class="widget-tag">Charging Speed</span>
+                                    <span class="widget-val text-teal" id="dash-speed-val">120 kW</span>
+                                </div>
+                                <div class="speed-graph-container">
+                                    <svg class="speed-svg-graph" viewBox="0 0 120 40">
+                                        <path id="dash-wave-path" d="M 0 20 Q 15 10 30 20 T 60 20 T 90 20 T 120 20" fill="none" stroke="var(--clr-teal)" stroke-width="2" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Widget 5: Charging Session Cost -->
+                            <div class="dash-card card-glass">
+                                <span class="widget-tag">Charging Cost (Session)</span>
+                                <span class="output-big-val text-coral" id="dash-session-cost">$12.45</span>
+                                <span class="widget-sub-lbl" id="dash-cost-rate">Rate: $0.18 per kWh</span>
+                            </div>
+
+                            <!-- Widget 6 & 7 & 8: Session Info (Duration, Energy, Carbon) -->
+                            <div class="dash-card card-glass">
+                                <h4 class="widget-title">Current Session Details</h4>
+                                <div class="session-stats-grid">
+                                    <div class="session-stat">
+                                        <span class="lbl">Elapsed Time</span>
+                                        <span class="val" id="dash-elapsed-time">24m 12s</span>
+                                    </div>
+                                    <div class="session-stat">
+                                        <span class="lbl">Energy Used</span>
+                                        <span class="val text-highlight" id="dash-session-energy">34.2 kWh</span>
+                                    </div>
+                                    <div class="session-stat">
+                                        <span class="lbl">Carbon Saved</span>
+                                        <span class="val text-green" id="dash-session-carbon">8.4 lbs</span>
+                                    </div>
+                                </div>
+
+                                <div class="charge-limit-slider-container">
+                                    <div class="slider-header-clean">
+                                        <span class="lbl">Charge Target Limit</span>
+                                        <span class="val" id="dash-target-slider-display">90%</span>
+                                    </div>
+                                    <input type="range" id="dash-target-slider" min="0" max="100" step="5" value="90" class="range-slider">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 3: STATISTICAL HISTORY & WALLET -->
+                        <div class="dash-col">
+                            <!-- Widget 11: Wallet Balance -->
+                            <div class="dash-card card-glass wallet-card">
+                                <div class="wallet-info">
+                                    <span class="widget-tag">Wallet Balance</span>
+                                    <span class="wallet-balance-val" id="dash-wallet-balance">$78.50</span>
+                                </div>
+                                <button class="btn btn-outline btn-sm" id="btn-wallet-topup">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="10" x2="12" y2="10"></line></svg>
+                                    Top Up
+                                </button>
+                            </div>
+
+                            <!-- Widget 9 & 10: Today's and Monthly charging summaries -->
+                            <div class="dash-card card-glass">
+                                <h4 class="widget-title">Charging Summaries</h4>
+                                <div class="summaries-grid">
+                                    <div class="summary-half">
+                                        <span class="lbl">Today's Total</span>
+                                        <span class="val" id="dash-today-energy">42.8 kWh</span>
+                                        <span class="sub" id="dash-today-cost">$6.20 â€¢ 2 sessions</span>
+                                    </div>
+                                    <div class="summary-half border-l">
+                                        <span class="lbl">Monthly Total</span>
+                                        <span class="val" id="dash-monthly-energy">310.4 kWh</span>
+                                        <span class="sub" id="dash-monthly-cost">$46.80 â€¢ 14 sessions</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bar-chart-widget">
+                                    <span class="chart-lbl">Weekly Power Usage (kWh)</span>
+                                    <div class="chart-bars">
+                                        <div class="bar-col"><span class="bar-fill" style="height: 45%;"></span><span class="bar-label">M</span></div>
+                                        <div class="bar-col"><span class="bar-fill" style="height: 60%;"></span><span class="bar-label">T</span></div>
+                                        <div class="bar-col"><span class="bar-fill" style="height: 30%;"></span><span class="bar-label">W</span></div>
+                                        <div class="bar-col"><span class="bar-fill" style="height: 85%;"></span><span class="bar-label">T</span></div>
+                                        <div class="bar-col"><span class="bar-fill" style="height: 50%;"></span><span class="bar-label">F</span></div>
+                                        <div class="bar-col"><span class="bar-fill" style="height: 75%;"></span><span class="bar-label">S</span></div>
+                                        <div class="bar-col"><span class="bar-fill" style="height: 90%;"></span><span class="bar-label">S</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Widget 12: Upcoming Reservation -->
+                            <div class="dash-card card-glass upcoming-reservation-card">
+                                <h4 class="widget-title">Upcoming Reservation</h4>
+                                <div class="reservation-ticket">
+                                    <div class="ticket-header">
+                                        <span class="station-name">Futian Central Plaza Spot #4</span>
+                                        <span class="reservation-badge">Reserved</span>
+                                    </div>
+                                    <div class="ticket-details">
+                                        <div class="row">
+                                            <span class="lbl">Schedule</span>
+                                            <span class="val">Tomorrow, 10:30 AM</span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="lbl">Specs</span>
+                                            <span class="val">350 kW DC Fast Charge</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline btn-sm btn-full" id="btn-dash-directions">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                                    Get Station Directions
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VEHICLE MANAGEMENT SECTION -->
+        <section id="garage" class="garage-section bg-light">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Garage Fleet</span>
+                    <h2 class="section-title reveal-fade-up">Vehicle Management</h2>
+                    <p class="section-subtitle">Manage your fleet, customize charging profiles, and monitor real-time vehicle diagnostics.</p>
+                </div>
+
+                <div class="garage-wrapper" style="position: relative;">
+                    <!-- Locked Overlay (Hidden when logged in) -->
+                    <div class="garage-lock-overlay" id="garage-lock-overlay">
+                        <div class="lock-card">
+                            <div class="lock-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lock-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </div>
+                            <h3>Garage Offline</h3>
+                            <p>Sign in to access your garage fleet, configure charging parameters, and run vehicle diagnostics.</p>
+                            <button class="btn btn-primary btn-sm auth-trigger">Sign In to Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Vehicles Grid -->
+                    <div class="vehicles-grid" id="vehicles-container">
+                        <!-- Populated dynamically via vehicles.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SMART CHARGING SCHEDULER SECTION -->
+        <section id="scheduler" class="scheduler-section">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Intelligent Planner</span>
+                    <h2 class="section-title reveal-fade-up">Smart Charging Scheduler</h2>
+                    <p class="section-subtitle">Schedule charging windows at off-peak grid rates and track estimated cost projections.</p>
+                </div>
+
+                <div class="scheduler-wrapper" style="position: relative;">
+                    <!-- Locked Overlay (Hidden when logged in) -->
+                    <div class="scheduler-lock-overlay" id="scheduler-lock-overlay">
+                        <div class="lock-card">
+                            <div class="lock-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lock-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </div>
+                            <h3>Scheduler Offline</h3>
+                            <p>Sign in to plan charge windows, browse available stations, and view scheduled sessions on your interactive timeline.</p>
+                            <button class="btn btn-primary btn-sm auth-trigger">Sign In to Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Scheduler Main Grid -->
+                    <div class="scheduler-grid">
+                        
+                        <!-- Panel 1: Scheduler Controls & Estimations -->
+                        <div class="scheduler-card scheduler-form-panel card-glass">
+                            <h4 class="widget-title">Schedule Session</h4>
+                            <form id="scheduler-form">
+                                <div class="form-row-grid">
+                                    <div class="form-group select-group">
+                                        <label for="sched-station" class="field-label">Select Charging Station</label>
+                                        <select id="sched-station" class="custom-select" required>
+                                            <!-- Dynamically populated via JS -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group select-group">
+                                        <label for="sched-date" class="field-label">Choose Date</label>
+                                        <input type="date" id="sched-date" class="custom-date-input" required>
+                                    </div>
+                                    <div class="form-group select-group">
+                                        <label for="sched-time" class="field-label">Choose Time</label>
+                                        <input type="time" id="sched-time" class="custom-time-input" required value="09:00">
+                                    </div>
+                                </div>
+
+                                <!-- Battery Limits (Starting vs Target) -->
+                                <div class="scheduler-slider-container">
+                                    <div class="slider-header-clean">
+                                        <span class="lbl">Starting Battery Level</span>
+                                        <span class="val" id="sched-start-display">20%</span>
+                                    </div>
+                                    <input type="range" id="sched-start-soc" min="10" max="80" step="5" value="20" class="range-slider">
+                                </div>
+
+                                <div class="scheduler-slider-container">
+                                    <div class="slider-header-clean">
+                                        <span class="lbl">Target Battery Limit</span>
+                                        <span class="val" id="sched-target-display">80%</span>
+                                    </div>
+                                    <input type="range" id="sched-target-soc" min="50" max="100" step="5" value="80" class="range-slider">
+                                </div>
+
+                                <!-- Real-time Estimates Display inside Form Panel -->
+                                <div class="estimates-panel-inside">
+                                    <div class="estimate-box">
+                                        <span class="lbl">Estimated Cost</span>
+                                        <span class="val text-highlight" id="sched-est-cost">$0.00</span>
+                                    </div>
+                                    <div class="estimate-box">
+                                        <span class="lbl">Estimated Duration</span>
+                                        <span class="val" id="sched-est-time">0m</span>
+                                    </div>
+                                    <div class="estimate-box">
+                                        <span class="lbl">Energy Required</span>
+                                        <span class="val" id="sched-est-energy">0 kWh</span>
+                                    </div>
+                                    <div class="estimate-box">
+                                        <span class="lbl">Charger Speed</span>
+                                        <span class="val text-teal" id="sched-est-speed">0 kW</span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-full" id="btn-schedule-session" style="margin-top: 20px;">
+                                    <span>Reserve Charging Time</span>
+                                    <span class="btn-loader"></span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Panel 2: Interactive Calendar & Timeline Display -->
+                        <div class="scheduler-card scheduler-visual-panel card-glass">
+                            <!-- Switch tabs: Calendar vs Timeline -->
+                            <div class="scheduler-tabs">
+                                <button class="scheduler-tab active" data-tab="calendar" type="button">Calendar View</button>
+                                <button class="scheduler-tab" data-tab="timeline" type="button">Daily Timeline</button>
+                            </div>
+
+                            <!-- TAB CONTENT 1: CALENDAR -->
+                            <div class="scheduler-tab-content active" id="scheduler-tab-calendar">
+                                <div class="calendar-header-nav">
+                                    <button class="calendar-nav-btn" id="btn-cal-prev" type="button" aria-label="Previous Month">&lsaquo;</button>
+                                    <h4 id="calendar-month-title" class="calendar-month-title">June 2026</h4>
+                                    <button class="calendar-nav-btn" id="btn-cal-next" type="button" aria-label="Next Month">&rsaquo;</button>
+                                </div>
+                                <div class="calendar-grid-header">
+                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                </div>
+                                <div class="calendar-grid-cells" id="calendar-cells">
+                                    <!-- Rendered dynamically via JS -->
+                                </div>
+                                <div class="calendar-info-legend">
+                                    <span class="legend-item"><span class="dot active"></span>Scheduled Charging</span>
+                                    <span class="legend-item"><span class="dot selected"></span>Selected Day</span>
+                                </div>
+                            </div>
+
+                            <!-- TAB CONTENT 2: TIMELINE -->
+                            <div class="scheduler-tab-content" id="scheduler-tab-timeline">
+                                <div class="timeline-selected-day-header">
+                                    <span class="lbl">Schedule Timeline</span>
+                                    <span class="val" id="timeline-date-display">June 20, 2026</span>
+                                </div>
+                                <div class="timeline-scroll-container">
+                                    <div class="timeline-axis" id="timeline-axis-element">
+                                        <!-- Rendered dynamically: hour slots from 00:00 to 24:00 -->
+                                    </div>
+                                    <div class="timeline-slots-area" id="timeline-slots-container">
+                                        <!-- Absolutely positioned scheduled slots go here -->
+                                        <div class="timeline-no-events" id="timeline-no-events-placeholder">
+                                            <span>No charging slots scheduled for this day.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- WALLET & BILLING SECTION -->
+        <section id="wallet" class="wallet-section bg-light">
+            <div class="container">
+                <div class="section-header text-center reveal-on-scroll">
+                    <span class="section-tag">Wallet & Billing</span>
+                    <h2 class="section-title reveal-fade-up">Digital Wallet Center</h2>
+                    <p class="section-subtitle">Manage payment methods, top up your balance, and review transaction history.</p>
+                </div>
+
+                <div class="wallet-wrapper" style="position: relative;">
+                    <!-- Locked Overlay (Hidden when logged in) -->
+                    <div class="wallet-lock-overlay" id="wallet-lock-overlay">
+                        <div class="lock-card">
+                            <div class="lock-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lock-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </div>
+                            <h3>Wallet Offline</h3>
+                            <p>Sign in to access your digital wallet, check your balance, recharge, and review billing statements.</p>
+                            <button class="btn btn-primary btn-sm auth-trigger">Sign In to Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Wallet Dashboard Grid -->
+                    <div class="wallet-grid">
+                        <!-- Left Column: Balance & Top Up -->
+                        <div class="wallet-col flex-col">
+                            <!-- Card 1: Balance Showcase (Credit Card style) -->
+                            <div class="dash-card wallet-balance-card reveal-on-scroll">
+                                <div class="card-inner-design">
+                                    <div class="card-chip"></div>
+                                    <div class="card-logo">ChargeMate Pay</div>
+                                    <div class="balance-details">
+                                        <span class="card-label">CURRENT BALANCE</span>
+                                        <h3 class="balance-value" id="wallet-balance-display">$78.50</h3>
+                                    </div>
+                                    <div class="card-footer-info">
+                                        <div class="card-holder">
+                                            <span class="card-label">ACCOUNT HOLDER</span>
+                                            <span class="card-holder-name" id="wallet-account-holder">EV DRIVER</span>
+                                        </div>
+                                        <div class="card-expiry">
+                                            <span class="card-label">STATUS</span>
+                                            <span class="card-status-active">ACTIVE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Recharge / Top-Up Card -->
+                            <div class="dash-card card-glass recharge-card reveal-on-scroll">
+                                <h4 class="panel-title">Recharge Wallet</h4>
+                                <form id="wallet-recharge-form">
+                                    <div class="form-group">
+                                        <label class="field-label">Select Amount ($)</label>
+                                        <div class="amount-presets">
+                                            <button type="button" class="btn btn-outline btn-preset active" data-amount="10">$10</button>
+                                            <button type="button" class="btn btn-outline btn-preset" data-amount="25">$25</button>
+                                            <button type="button" class="btn btn-outline btn-preset" data-amount="50">$50</button>
+                                            <button type="button" class="btn btn-outline btn-preset" data-amount="100">$100</button>
+                                        </div>
+                                        <div class="floating-label-group" style="margin-top: 16px;">
+                                            <input type="number" id="recharge-custom-amount" min="5" max="500" step="0.01" placeholder=" " value="10.00" required>
+                                            <label for="recharge-custom-amount">Custom Amount ($)</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="field-label">Payment Method</label>
+                                        <div class="payment-method-selector">
+                                            <label class="pm-option active" data-pm-type="saved-card">
+                                                <input type="radio" name="payment-method" value="saved-card" checked>
+                                                <span>Saved Card</span>
+                                            </label>
+                                            <label class="pm-option" data-pm-type="upi">
+                                                <input type="radio" name="payment-method" value="upi">
+                                                <span>UPI</span>
+                                            </label>
+                                            <label class="pm-option" data-pm-type="digital-wallet">
+                                                <input type="radio" name="payment-method" value="digital-wallet">
+                                                <span>Apple/Google Pay</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Saved Cards Dropdown Section -->
+                                    <div class="recharge-pm-details active" id="recharge-pm-saved-card">
+                                        <div class="form-group">
+                                            <label for="recharge-select-card" class="field-label">Select Saved Card</label>
+                                            <select id="recharge-select-card" class="custom-select">
+                                                <!-- Populated dynamically via JS -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- UPI Section -->
+                                    <div class="recharge-pm-details" id="recharge-pm-upi">
+                                        <div class="form-group floating-label-group">
+                                            <input type="text" id="recharge-upi-id" placeholder=" " value="driver@upi">
+                                            <label for="recharge-upi-id">Enter UPI ID</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Apple Pay / Google Pay Section -->
+                                    <div class="recharge-pm-details" id="recharge-pm-digital-wallet">
+                                        <div class="digital-pay-buttons">
+                                            <button type="button" class="btn-apple-pay" id="btn-apple-pay">
+                                                <svg class="apple-logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path fill="white" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.31.03-1.73-.79-3.23-.79s-1.96.77-3.22.82c-1.35.03-2.24-1.2-3.09-2.42-1.75-2.5-3.07-7.14-1.26-10.22.89-1.53 2.49-2.5 4.22-2.5 1.31-.02 2.54.88 3.36.88.82 0 2.3-.98 3.85-.84 1.56.07 2.71.63 3.51 1.77-3.13 1.85-2.65 6.22.95 7.7-.63 1.61-1.84 3.03-3.22 3.86M14.84 4.27c.75-.9 1.26-2.18 1.12-3.43-1.07.04-2.38.7-3.15 1.62-.7.8-1.3 2.08-1.14 3.31 1.2.09 2.4-.61 3.17-1.5"/>
+                                                </svg>
+                                                <span class="apple-pay-text">Pay</span>
+                                                <span class="btn-loader"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-white btn-digital-pay" id="btn-google-pay" style="position: relative;">
+                                                <span><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span> Pay</span>
+                                                <span class="btn-loader"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-full" id="btn-submit-recharge" style="margin-top: 10px;">
+                                        <span>Confirm Payment</span>
+                                        <span class="btn-loader"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Saved Cards & Payment History -->
+                        <div class="wallet-col flex-col">
+                            <!-- Card 3: Saved Cards list & Card Creater -->
+                            <div class="dash-card card-glass saved-cards-panel reveal-on-scroll">
+                                <div class="panel-header-clean" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                                    <h4 class="panel-title" style="margin-bottom:0;">Saved Payment Methods</h4>
+                                    <button type="button" class="btn btn-outline btn-sm" id="btn-toggle-add-card" style="padding: 4px 10px; font-size:12px;">Add Card</button>
+                                </div>
+                                
+                                <div class="cards-visual-list" id="saved-cards-container">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+
+                                <!-- Add Card form is now a premium Modal Overlay (placed at the bottom of body) -->
+                            </div>
+
+                            <!-- Card 4: Transaction history -->
+                            <div class="dash-card card-glass transactions-panel reveal-on-scroll">
+                                <h4 class="panel-title">Transaction History</h4>
+                                <div class="transactions-list-container">
+                                    <table class="transactions-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Type</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                                <th>Invoice</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="transaction-history-rows">
+                                            <!-- Populated dynamically via JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SMART APP SECTION -->
+        <section id="app" class="app-section">
+            <div class="container app-grid">
+                <div class="app-content reveal-on-scroll">
+                    <span class="section-tag">Intelligent Control</span>
+                    <h2 class="section-title reveal-fade-up">The Charger in Your Pocket</h2>
+                    <p class="section-description">Manage hardware and network access on the go. Set smart schedules, check real-time grid occupancy, and monitor battery conditioning.</p>
+                    
+                    <div class="app-features">
+                        <div class="app-feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="feature-title">Smart Scheduling</h4>
+                                <p class="feature-text">Automate charging sessions during low-tariff hours to minimize electricity costs.</p>
+                            </div>
+                        </div>
+
+                        <div class="app-feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="feature-title">Grid Integrity & Payment</h4>
+                                <p class="feature-text">Tap-and-charge directly at stations and manage transaction history transparently.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Phone Mockup -->
+                <div class="app-visual reveal-on-scroll delay-1">
+                    <div class="phone-mockup">
+                        <div class="phone-shell">
+                            <div class="phone-screen">
+                                <!-- Top Bar -->
+                                <div class="phone-header">
+                                    <span class="phone-time">09:41</span>
+                                    <div class="phone-island"></div>
+                                    <div class="phone-indicators">
+                                        <svg class="phone-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c3.9 3.9 10.2 3.9 14.1 0l-1.62-1.78C18.26 16.07 19 14.12 19 12c0-4.97-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+                                        <svg class="phone-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="10" rx="2" /><path d="M22 10v4" /></svg>
+                                    </div>
+                                </div>
+
+                                <!-- App Navigation in Phone -->
+                                <div class="phone-app-header">
+                                    <span class="app-brand">ChargeMate</span>
+                                    <!-- Bell Icon button for Notifications -->
+                                    <button class="phone-bell-btn" id="phone-bell-btn" aria-label="Notifications" style="background:none; border:none; color:var(--clr-text-secondary); cursor:pointer; position:relative; display:flex; align-items:center; padding:0;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bell-svg" style="width:20px; height:20px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                        <span class="notif-badge" style="position:absolute; top:2px; right:2px; width:6px; height:6px; background-color:var(--clr-accent); border-radius:50%;"></span>
+                                    </button>
+                                </div>
+
+                                <!-- Dynamic App Views -->
+                                <div class="phone-app-body">
+                                    <div class="phone-screens-slider">
+                                        <!-- Screen 1: Dashboard -->
+                                        <div class="app-screen" id="screen-dash">
+                                            <div class="phone-vehicle-showcase" style="text-align:center; margin-bottom:15px;">
+                                                <h4 class="phone-vehicle-name" id="phone-dash-model" style="font-size:16px; font-weight:800; color:var(--clr-text-primary); margin-bottom:2px;">BYD Seal</h4>
+                                                <span class="phone-vehicle-status" style="font-size:10px; font-weight:600; color:var(--clr-teal); letter-spacing:0.05em;">CONNECTED â€¢ PORT LOCKED</span>
+                                                <div class="phone-vehicle-image" style="height:90px; display:flex; align-items:center; justify-content:center; margin:10px 0;">
+                                                    <img id="phone-dash-img" src="assets/images/byd-seal-card.png" alt="EV Vehicle" style="max-width:90%; max-height:100%; object-fit:contain; filter:drop-shadow(0 8px 6px rgba(0,0,0,0.15));" width="1024" height="1024" loading="lazy">
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Stats Row -->
+                                            <div class="phone-dash-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
+                                                <div class="phone-dash-tile" style="background:var(--clr-bg-alt); border:1px solid var(--border-color-light); border-radius:var(--radius-sm); padding:10px; text-align:center;">
+                                                    <span class="val" id="phone-dash-range" style="display:block; font-size:15px; font-weight:700; color:var(--clr-text-primary);">248 mi</span>
+                                                    <span class="lbl" style="font-size:10px; color:var(--clr-text-muted);">Range</span>
+                                                </div>
+                                                <div class="phone-dash-tile" style="background:var(--clr-bg-alt); border:1px solid var(--border-color-light); border-radius:var(--radius-sm); padding:10px; text-align:center;">
+                                                    <span class="val" id="phone-dash-soc" style="display:block; font-size:15px; font-weight:700; color:var(--clr-text-primary);">78%</span>
+                                                    <span class="lbl" style="font-size:10px; color:var(--clr-text-muted);">Battery</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Controls List -->
+                                            <div class="phone-controls-list" style="display:flex; flex-direction:column; gap:10px;">
+                                                <div class="phone-control-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                    <span class="label" style="font-size:12px; font-weight:600; color:var(--clr-text-secondary);">Charge Port Flap</span>
+                                                    <button class="phone-toggle active" id="phone-toggle-port" style="padding:4px 10px; font-size:10px; font-weight:700; background:var(--clr-teal-light); color:var(--clr-teal); border:none; border-radius:4px; cursor:pointer;">LOCKED</button>
+                                                </div>
+                                                <div class="phone-control-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                    <span class="label" style="font-size:12px; font-weight:600; color:var(--clr-text-secondary);">Climate Controls</span>
+                                                    <button class="phone-toggle" id="phone-toggle-climate" style="padding:4px 10px; font-size:10px; font-weight:700; background:var(--border-color); color:var(--clr-text-muted); border:none; border-radius:4px; cursor:pointer;">OFF</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Screen 2: Charging State -->
+                                        <div class="app-screen" id="screen-charge">
+                                            <div class="charge-gauge">
+                                                <svg class="gauge-svg" viewBox="0 0 100 100">
+                                                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6" />
+                                                    <circle id="phone-gauge-progress" cx="50" cy="50" r="40" fill="none" stroke="var(--clr-accent)" stroke-width="6" stroke-dasharray="251.2" stroke-dashoffset="55.2" stroke-linecap="round" transform="rotate(-90 50 50)" />
+                                                </svg>
+                                                <div class="gauge-center">
+                                                    <span class="gauge-percent" id="phone-battery-percent">78%</span>
+                                                    <span class="gauge-label">Charging</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="app-stat-row" style="margin-top:15px;">
+                                                <div class="app-stat-card">
+                                                    <span class="val" id="phone-stat-power">22.0 kW</span>
+                                                    <span class="lbl">Rate</span>
+                                                </div>
+                                                <div class="app-stat-card">
+                                                    <span class="val" id="phone-stat-time">45m left</span>
+                                                    <span class="lbl">To Limit</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="app-limit-controller" style="margin-top:15px; padding:12px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                <div class="limit-label-row" style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--clr-text-secondary); margin-bottom:8px;">
+                                                    <span>Target Limit</span>
+                                                    <span id="phone-limit-display" style="color:var(--clr-accent)">90%</span>
+                                                </div>
+                                                <input type="range" id="phone-limit-slider" min="50" max="100" step="5" value="90" class="range-slider">
+                                            </div>
+                                        </div>
+
+                                        <!-- Screen 3: Station Map -->
+                                        <div class="app-screen" id="screen-map">
+                                            <div class="phone-map-search" style="margin-bottom:12px;">
+                                                <input type="text" placeholder="Search charging hubs..." class="mini-search-input" style="width:100%; padding:8px 12px; border:1px solid var(--border-color); border-radius:4px; font-size:11px; outline:none; background:var(--clr-bg-primary); box-sizing:border-box;">
+                                            </div>
+                                            <div class="phone-mini-map" style="height:150px; border-radius:8px; overflow:hidden; border:1px solid var(--border-color-light); margin-bottom:12px;">
+                                                <svg class="mini-map-svg" viewBox="0 0 100 100" style="width:100%; height:100%; background:#F8FAFC;">
+                                                    <line x1="10" y1="0" x2="10" y2="100" stroke="#E2E8F0" stroke-width="2" />
+                                                    <line x1="50" y1="0" x2="50" y2="100" stroke="#E2E8F0" stroke-width="3" />
+                                                    <line x1="85" y1="0" x2="85" y2="100" stroke="#E2E8F0" stroke-width="2" />
+                                                    <line x1="0" y1="20" x2="100" y2="20" stroke="#E2E8F0" stroke-width="2" />
+                                                    <line x1="0" y1="65" x2="100" y2="65" stroke="#E2E8F0" stroke-width="3" />
+                                                    <circle cx="50" cy="20" r="3" fill="var(--clr-accent)" class="mini-pin pulsing" />
+                                                    <circle cx="10" cy="65" r="3" fill="#0D9488" class="mini-pin" />
+                                                    <circle cx="85" cy="40" r="3" fill="#0D9488" class="mini-pin" />
+                                                </svg>
+                                            </div>
+                                            <div class="phone-station-snippet" style="padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light); text-align:center;">
+                                                <span class="name" style="display:block; font-size:12px; font-weight:700; color:var(--clr-text-primary); margin-bottom:2px;">Downtown Skyline Hub</span>
+                                                <span class="details" style="font-size:10px; color:var(--clr-text-muted);">0.8 mi â€¢ 150 kW â€¢ $0.35/kWh</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Screen 4: Wallet -->
+                                        <div class="app-screen" id="screen-wallet">
+                                            <div class="phone-wallet-card" style="background: linear-gradient(135deg, var(--clr-accent) 0%, #4F46E5 100%); color:#FFFFFF; border-radius:12px; padding:15px; height:95px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 8px 16px rgba(79,70,229,0.15); box-sizing:border-box;">
+                                                <span class="card-logo" style="font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; opacity:0.8;">ChargeMate Pay</span>
+                                                <h4 class="card-balance" id="phone-wallet-balance" style="font-size:24px; font-weight:800; line-height:1; margin:6px 0 0 0;">$78.50</h4>
+                                                <span class="card-label" style="font-size:8px; font-weight:600; letter-spacing:0.05em; opacity:0.7;">CURRENT BALANCE</span>
+                                            </div>
+                                            
+                                            <!-- Top Up Shortcuts -->
+                                            <div class="phone-topup-shortcuts" style="display:flex; gap:8px; margin:15px 0;">
+                                                <button class="topup-shortcut-btn" data-amt="10" style="flex:1; padding:8px; font-size:11px; font-weight:700; background:var(--clr-bg-alt); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">+$10</button>
+                                                <button class="topup-shortcut-btn" data-amt="25" style="flex:1; padding:8px; font-size:11px; font-weight:700; background:var(--clr-bg-alt); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">+$25</button>
+                                                <button class="topup-shortcut-btn" data-amt="50" style="flex:1; padding:8px; font-size:11px; font-weight:700; background:var(--clr-bg-alt); border:1px solid var(--border-color); border-radius:4px; cursor:pointer;">+$50</button>
+                                            </div>
+
+                                            <div class="phone-txn-history" style="display:flex; flex-direction:column; gap:8px;">
+                                                <h5 class="history-title" style="font-size:11px; font-weight:700; color:var(--clr-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">Recent Billing</h5>
+                                                <div class="mini-txn-row" style="display:flex; justify-content:space-between; font-size:11px; padding:6px 0; border-bottom:1px dashed var(--border-color-light);">
+                                                    <span style="color:var(--clr-text-secondary);">Charging Session</span>
+                                                    <span class="neg" style="color:var(--clr-accent); font-weight:700;">-$12.45</span>
+                                                </div>
+                                                <div class="mini-txn-row" style="display:flex; justify-content:space-between; font-size:11px; padding:6px 0; border-bottom:1px dashed var(--border-color-light);">
+                                                    <span style="color:var(--clr-text-secondary);">Wallet Top-up</span>
+                                                    <span class="pos" style="color:var(--clr-teal); font-weight:700;">+$50.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Screen 5: Statistics -->
+                                        <div class="app-screen" id="screen-stats">
+                                            <h5 class="stats-screen-title" style="font-size:12px; font-weight:700; color:var(--clr-text-secondary); margin-bottom:12px;">Energy Draw History</h5>
+                                            <div class="phone-stats-chart" style="display:flex; justify-content:space-between; align-items:flex-end; height:80px; margin-bottom:15px; border-bottom:1px solid var(--border-color-light); padding-bottom:4px;">
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 45%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">M</span></div>
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 70%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">T</span></div>
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 35%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">W</span></div>
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 90%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">T</span></div>
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 60%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">F</span></div>
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 50%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">S</span></div>
+                                                <div class="phone-bar-col" style="display:flex; flex-direction:column; align-items:center; width:22px; height:100%; justify-content:flex-end; gap:4px;"><div class="bar" style="height: 80%; width:6px; background:var(--clr-accent); border-radius:2px;"></div><span class="label" style="font-size:8px; font-weight:700; color:var(--clr-text-muted);">S</span></div>
+                                            </div>
+                                            <div class="stats-summary-box" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:var(--clr-bg-alt); padding:10px; border-radius:var(--radius-sm); border:1px solid var(--border-color-light); text-align:center;">
+                                                <div class="stat">
+                                                    <span class="val" style="display:block; font-size:13px; font-weight:700; color:var(--clr-text-primary);">138 kWh</span>
+                                                    <span class="lbl" style="font-size:9px; color:var(--clr-text-muted);">This Week</span>
+                                                </div>
+                                                <div class="stat">
+                                                    <span class="val" style="display:block; font-size:13px; font-weight:700; color:var(--clr-text-primary);">$48.30</span>
+                                                    <span class="lbl" style="font-size:9px; color:var(--clr-text-muted);">Total Cost</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Screen 6: Settings -->
+                                        <div class="app-screen" id="screen-settings">
+                                            <h5 class="settings-screen-title" style="font-size:12px; font-weight:700; color:var(--clr-text-secondary); margin-bottom:12px;">App Configurations</h5>
+                                            
+                                            <!-- User Card -->
+                                            <div class="phone-settings-profile" style="display:flex; align-items:center; gap:10px; margin-bottom:15px; padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                <div class="profile-avatar" id="phone-settings-avatar-badge" style="width:36px; height:36px; border-radius:50%; background: linear-gradient(135deg, var(--clr-accent) 0%, #4F46E5 100%); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-weight:800; font-size:14px; flex-shrink:0; overflow:hidden; position:relative;">
+                                                    <span class="phone-settings-avatar-letter">MR</span>
+                                                    <img class="phone-settings-avatar-image" src="" alt="Profile Image" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                                                </div>
+                                                <div class="profile-info" style="flex:1; overflow:hidden;">
+                                                    <span class="profile-name" id="phone-settings-username" style="display:block; font-size:12px; font-weight:700; color:var(--clr-text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Mashfi Rahman</span>
+                                                    <span class="profile-email" id="phone-settings-email" style="display:block; font-size:9px; color:var(--clr-text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">driver@chargemate.ev</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="phone-settings-group" style="display:flex; flex-direction:column; gap:10px; margin-bottom:15px;">
+                                                <div class="phone-setting-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                    <span class="label" style="font-size:11px; font-weight:600; color:var(--clr-text-secondary);">Dark Mode Theme</span>
+                                                    <label class="phone-switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                                                        <input type="checkbox" id="phone-settings-dark-toggle" style="opacity:0; width:0; height:0;">
+                                                        <span class="slider-round" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#CBD5E1; transition:.3s; border-radius:34px;"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="phone-setting-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                    <span class="label" style="font-size:11px; font-weight:600; color:var(--clr-text-secondary);">Battery Care (80%)</span>
+                                                    <label class="phone-switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                                                        <input type="checkbox" id="phone-settings-care-mode" style="opacity:0; width:0; height:0;" checked>
+                                                        <span class="slider-round" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#CBD5E1; transition:.3s; border-radius:34px;"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="phone-setting-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light);">
+                                                    <span class="label" style="font-size:11px; font-weight:600; color:var(--clr-text-secondary);">Plug-in Reminders</span>
+                                                    <label class="phone-switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                                                        <input type="checkbox" id="phone-settings-notif-toggle" style="opacity:0; width:0; height:0;" checked>
+                                                        <span class="slider-round" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#CBD5E1; transition:.3s; border-radius:34px;"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Reset Actions -->
+                                            <div class="phone-settings-actions" style="display:flex; flex-direction:column; gap:8px;">
+                                                <button class="phone-action-btn" id="phone-btn-reset" style="padding:10px; font-size:11px; font-weight:700; background:rgba(239, 68, 68, 0.1); color:var(--clr-red); border:1px solid rgba(239, 68, 68, 0.2); border-radius:8px; cursor:pointer; transition:all 0.2s; text-align:center;">Reset Application Cache</button>
+                                                <div style="text-align:center; font-size:8px; color:var(--clr-text-muted); margin-top:5px;">App Version 2.4.5 â€¢ Hardware Link Active</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Screen 7: Notifications -->
+                                        <div class="app-screen" id="screen-notif">
+                                            <h5 class="notif-screen-title" style="font-size:12px; font-weight:700; color:var(--clr-text-secondary); margin-bottom:12px;">Alerts & Statements</h5>
+                                            <div class="phone-notif-list" style="display:flex; flex-direction:column; gap:8px;">
+                                                <div class="phone-notif-item" style="padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light); position:relative;">
+                                                    <span class="title" style="display:block; font-size:11px; font-weight:700; color:var(--clr-text-primary); margin-bottom:2px;">Charge Completed</span>
+                                                    <p class="text" style="font-size:9px; color:var(--clr-text-secondary); margin:0;">BYD Seal reached target charge limit (90%).</p>
+                                                    <span class="time" style="position:absolute; top:10px; right:10px; font-size:8px; color:var(--clr-text-muted);">15m ago</span>
+                                                </div>
+                                                <div class="phone-notif-item" style="padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light); position:relative;">
+                                                    <span class="title" style="display:block; font-size:11px; font-weight:700; color:var(--clr-text-primary); margin-bottom:2px;">Wallet Reloaded</span>
+                                                    <p class="text" style="font-size:9px; color:var(--clr-text-secondary); margin:0;">Added $25.00 successfully to card balance.</p>
+                                                    <span class="time" style="position:absolute; top:10px; right:10px; font-size:8px; color:var(--clr-text-muted);">2h ago</span>
+                                                </div>
+                                                <div class="phone-notif-item" style="padding:10px; background:var(--clr-bg-alt); border-radius:var(--radius-sm); border:1px solid var(--border-color-light); position:relative;">
+                                                    <span class="title" style="display:block; font-size:11px; font-weight:700; color:var(--clr-text-primary); margin-bottom:2px;">Active Hold Lock</span>
+                                                    <p class="text" style="font-size:9px; color:var(--clr-text-secondary); margin:0;">Port hold active at Downtown Skyline Hub.</p>
+                                                    <span class="time" style="position:absolute; top:10px; right:10px; font-size:8px; color:var(--clr-text-muted);">1d ago</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+ 
+                                <!-- App Navigation Tabs inside Phone -->
+                                <div class="phone-tabs">
+                                    <button class="phone-tab active" data-target="screen-dash" aria-label="Dashboard">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                                        <span>Home</span>
+                                    </button>
+                                    <button class="phone-tab" data-target="screen-charge" aria-label="Charging">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                                        <span>Charge</span>
+                                    </button>
+                                    <button class="phone-tab" data-target="screen-map" aria-label="Map">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        <span>Map</span>
+                                    </button>
+                                    <button class="phone-tab" data-target="screen-wallet" aria-label="Wallet">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="10" x2="12" y2="10"></line></svg>
+                                        <span>Wallet</span>
+                                    </button>
+                                    <button class="phone-tab" data-target="screen-stats" aria-label="Statistics">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                        <span>Stats</span>
+                                    </button>
+                                    <button class="phone-tab" data-target="screen-settings" aria-label="Settings">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                        <span>Set</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESERVATION PORTAL -->
+        <section id="reserve" class="reserve-section bg-light">
+            <div class="container reserve-box">
+                <div class="reserve-grid">
+                    <!-- Left info -->
+                    <div class="reserve-info reveal-on-scroll">
+                        <span class="section-tag">Direct Inquiry</span>
+                        <h2 class="section-title reveal-fade-up">Bring ChargeMate Home</h2>
+                        <p class="reserve-desc">Secure a charging slot or book home hardware installation instantly.</p>
+                        
+                        <div class="benefits-list">
+                            <div class="benefit-item">
+                                <span class="check-icon">&#10003;</span>
+                                <div>
+                                    <h5>3-Year Hardware Warranty</h5>
+                                    <p>Comprehensive protection on home charging pods.</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="check-icon">&#10003;</span>
+                                <div>
+                                    <h5>Professional Installation</h5>
+                                    <p>Certified local technicians handle grid setup and testing.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lifestyle Image with Cinematic Overlay -->
+                        <div class="reserve-lifestyle-container reveal-on-scroll delay-2" style="margin-top: 32px; position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 16/9;">
+                            <img src="assets/images/lifestyle-charging.png" alt="Cinematic EV charging at sunset" class="lifestyle-img" loading="lazy" width="800" height="450" style="width: 100%; height: 100%; display: block; object-fit: cover;">
+                            <div class="image-overlay-gradient"></div>
+                        </div>
+                    </div>
+
+                    <!-- Booking/Inquiry Form -->
+                    <div class="reserve-form-container card-panel reveal-on-scroll delay-1">
+                        <h3 class="panel-title">Reserve Hardware or Grid Port</h3>
+                        
+                        <form id="booking-form">
+                            <div class="form-group">
+                                <label for="reserve-type" class="field-label">What are you reserving?</label>
+                                <select id="reserve-type" class="custom-select" required>
+                                    <option value="pro-home" selected>ChargeMate Pro Home Charger (22kW)</option>
+                                    <option value="ultra-fleet">ChargeMate Ultra Commercial Partnership</option>
+                                    <option value="network-pass">Metropolitan Public Grid Network Pass</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group floating-label-group">
+                                    <input type="text" id="booking-name" required placeholder=" ">
+                                    <label for="booking-name">Full Name</label>
+                                </div>
+                                <div class="form-group floating-label-group">
+                                    <input type="email" id="booking-email" required placeholder=" " autocomplete="email">
+                                    <label for="booking-email">Email Address</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group floating-label-group">
+                                <input type="text" id="booking-city" required placeholder=" ">
+                                <label for="booking-city">Location (City, Region)</label>
+                            </div>
+
+                            <div class="form-group floating-label-group">
+                                <textarea id="booking-notes" placeholder=" " rows="3"></textarea>
+                                <label for="booking-notes">Special Requirements (Optional)</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <span>Submit Reservation</span>
+                                <span class="btn-loader"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Success Modal popup -->
+    <div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Reservation submitted successfully">
+        <div class="success-card">
+            <div class="success-icon-wrapper">
+                <svg class="success-checkmark" viewBox="0 0 52 52">
+                    <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="success-check" fill="none" d="M14.1 27.2 l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+            <h3 class="success-title">Reservation Submitted</h3>
+            <p class="success-message" id="success-modal-message">Your request has been received. Our charging coordination team will reach out via email shortly.</p>
+            <button class="btn btn-primary btn-sm" id="btn-close-success">Done</button>
+        </div>
+    </div>
+
+    <!-- Vehicle Form Modal Popup -->
+    <div class="auth-overlay" id="vehicle-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="vehicle-modal-title">
+        <div class="auth-card vehicle-modal-card">
+            <button class="auth-close" id="vehicle-modal-close" aria-label="Close modal">&times;</button>
+            <h3 class="auth-title" id="vehicle-modal-title">Add Vehicle to Garage</h3>
+            <p class="auth-subtitle">Specify your EV diagnostics, battery size, and custom charging limits.</p>
+            
+            <form id="vehicle-form">
+                <input type="hidden" id="vehicle-edit-index" value="">
+                
+                <div class="form-group">
+                    <label for="vehicle-model" class="field-label">Vehicle Model</label>
+                    <select id="vehicle-model" class="custom-select" required>
+                        <option value="byd-seal">BYD Seal</option>
+                        <option value="byd-han">BYD Han</option>
+                        <option value="tesla-model-y">Tesla Model Y</option>
+                        <option value="audi-etron">Audi e-tron GT</option>
+                        <option value="taycan">Porsche Taycan</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group floating-label-group">
+                        <input type="number" id="vehicle-battery" required min="10" max="150" step="0.1" placeholder=" ">
+                        <label for="vehicle-battery">Battery Capacity (kWh)</label>
+                    </div>
+                    <div class="form-group floating-label-group">
+                        <input type="text" id="vehicle-software" required placeholder=" " value="v1.0.0">
+                        <label for="vehicle-software">Software Version</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group floating-label-group">
+                        <input type="number" id="vehicle-tire" required min="15" max="50" step="1" placeholder=" " value="36">
+                        <label for="vehicle-tire">Tire Pressure (psi)</label>
+                    </div>
+                    <div class="form-group floating-label-group">
+                        <input type="date" id="vehicle-service" required placeholder=" ">
+                        <label for="vehicle-service">Last Service Date</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicle-charger" class="field-label">Preferred Home Charger</label>
+                    <select id="vehicle-charger" class="custom-select" required>
+                        <option value="ChargeMate Pro (22kW)" selected>ChargeMate Pro (22kW)</option>
+                        <option value="ChargeMate Pro (11kW)">ChargeMate Pro (11kW)</option>
+                        <option value="Standard Wallbox (7.4kW)">Standard Wallbox (7.4kW)</option>
+                        <option value="Standard Wall Outlet (2.3kW)">Standard Wall Outlet (2.3kW)</option>
+                        <option value="None">None</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicle-health" class="field-label">Vehicle Health Status</label>
+                    <select id="vehicle-health" class="custom-select" required>
+                        <option value="Excellent" selected>Excellent Diagnostics (Healthy)</option>
+                        <option value="Good">Good Diagnostics (Minor Wear)</option>
+                        <option value="Service Required">Service Required (Diagnostics Warning)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicle-charge-start" class="field-label">Charge Start Time</label>
+                        <input type="time" id="vehicle-charge-start" class="custom-time-input" required value="22:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-charge-end" class="field-label">Charge End Time</label>
+                        <input type="time" id="vehicle-charge-end" class="custom-time-input" required value="06:00">
+                    </div>
+                </div>
+
+                <div class="charge-limit-slider-container" style="margin: 20px 0 30px 0;">
+                    <div class="slider-header-clean" style="margin-bottom: 8px;">
+                        <span class="lbl" style="font-size: 13px; font-weight: 600; color: var(--clr-text-secondary);">Preferred Charge Limit</span>
+                        <span class="val" id="modal-charge-limit-display" style="font-size: 13px; font-weight: 700; color: var(--clr-accent);">90%</span>
+                    </div>
+                    <input type="range" id="vehicle-limit" min="50" max="100" step="5" value="90" class="range-slider">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span id="vehicle-form-submit-text">Add Vehicle</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reschedule Modal Popup -->
+    <div class="auth-overlay" id="reschedule-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Reschedule priority port">
+        <div class="auth-card">
+            <button class="auth-close" id="reschedule-modal-close" aria-label="Close modal">&times;</button>
+            <h3 class="auth-title">Reschedule Priority Port</h3>
+            <p class="auth-subtitle">Select a different connector or update your priority charger hold.</p>
+            
+            <form id="reschedule-form">
+                <div class="form-group" style="margin-top: 16px;">
+                    <label for="reschedule-connector" class="field-label">Select Connector Type</label>
+                    <select id="reschedule-connector" class="custom-select" required>
+                        <!-- Options populated via JS -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" style="margin-top: 20px;">
+                    <span>Update Reservation</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Schedule Success Modal popup -->
+    <div class="modal-overlay" id="schedule-success-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Booking scheduled successfully">
+        <div class="success-card schedule-success-card">
+            <div class="animated-connector-wrapper">
+                <div class="charger-plug-animation">
+                    <svg viewBox="0 0 100 100" class="svg-plug">
+                        <circle cx="50" cy="50" r="45" class="ring-bg" />
+                        <circle cx="50" cy="50" r="45" class="ring-pulse" />
+                        <path class="plug-body" d="M 35 40 L 65 40 L 65 60 L 35 60 Z M 45 30 L 55 30 L 55 40 L 45 40 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                        <polygon class="lightning-bolt" points="50,42 45,52 49,52 48,58 55,48 51,48" fill="var(--clr-accent)"/>
+                    </svg>
+                </div>
+            </div>
+            <h3 class="success-title">Charging Reserved</h3>
+            <p class="success-message" id="schedule-success-message">Your smart charging slot has been scheduled successfully. We have synced the preferences to your vehicle telemetry.</p>
+            <div class="success-summary-receipt">
+                <div class="receipt-row">
+                    <span class="lbl">Station</span>
+                    <span class="val" id="receipt-station">Times Square Plaza</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="lbl">Date & Time</span>
+                    <span class="val" id="receipt-datetime">June 21, 09:00 AM</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="lbl">Est. Duration</span>
+                    <span class="val" id="receipt-duration">45 minutes</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="lbl">Est. Cost</span>
+                    <span class="val text-highlight" id="receipt-cost">$18.90</span>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btn-close-schedule-success" style="margin-top: 15px;">Confirm & Done</button>
+        </div>
+    </div>    <!-- Add Card Modal Overlay -->
+    <div class="auth-overlay" id="add-card-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Add new payment card">
+        <div class="auth-card" style="max-width: 420px; width: 100%;">
+            <button class="auth-close" id="btn-close-add-card" aria-label="Close modal">&times;</button>
+            <h3 class="auth-title">Add New Card</h3>
+            <p class="auth-subtitle" style="margin-bottom: 20px;">Link a credit/debit card to your ChargeMate Pay wallet.</p>
+            
+            <!-- Interactive 3D Card Preview -->
+            <div class="interactive-card-preview-container" style="perspective: 1000px; margin-bottom: 20px; display: flex; justify-content: center;">
+                <div class="preview-credit-card" id="preview-credit-card" style="width: 100%; max-width: 290px; height: 165px; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
+                    <!-- FRONT -->
+                    <div class="card-face card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; padding: 18px; box-sizing: border-box; background: linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%); color: white; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 20px rgba(0,0,0,0.15); transition: background 0.4s ease;">
+                        <div class="preview-card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="preview-card-logo" id="preview-card-logo" style="font-size: 14px; font-weight: 800; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif;">VISA</span>
+                            <span style="opacity: 0.8; font-size: 10px; font-weight: 700;">DEBIT</span>
+                        </div>
+                        <div class="preview-card-chip" style="width: 32px; height: 24px; background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); border-radius: 4px; margin-top: 8px;"></div>
+                        <div class="preview-card-number" id="preview-card-number" style="font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.08em; margin: 10px 0 0 0; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢</div>
+                        <div class="preview-card-footer" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8px;">
+                            <div style="overflow: hidden; max-width: 70%;">
+                                <span style="font-size: 7px; text-transform: uppercase; opacity: 0.6; display: block; letter-spacing: 0.05em;">Card Holder</span>
+                                <span id="preview-card-name" style="font-size: 11px; font-weight: 700; display: block; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Outfit', sans-serif;">Your Name</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 7px; text-transform: uppercase; opacity: 0.6; display: block; letter-spacing: 0.05em;">Expires</span>
+                                <span id="preview-card-expiry" style="font-size: 11px; font-weight: 700; display: block; font-family: 'Outfit', sans-serif;">MM/YY</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BACK -->
+                    <div class="card-face card-back" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; padding: 18px; box-sizing: border-box; background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); color: white; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 20px rgba(0,0,0,0.15); transform: rotateY(180deg);">
+                        <div class="card-magnetic-strip" style="width: calc(100% + 36px); height: 35px; background: #000; margin: -18px -18px 0 -18px; border-top-left-radius: 16px; border-top-right-radius: 16px;"></div>
+                        <div class="card-signature-area" style="margin-top: 15px;">
+                            <span style="font-size: 7px; text-transform: uppercase; opacity: 0.6; display: block; letter-spacing: 0.05em; margin-bottom: 4px;">Authorized Signature</span>
+                            <div style="background: white; height: 26px; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding: 0 10px; box-sizing: border-box;">
+                                <span id="preview-card-cvv" style="color: #000; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; font-style: italic; letter-spacing: 0.15em;">â€¢â€¢â€¢</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right; font-size: 7px; opacity: 0.5; margin-top: 8px;">Not valid unless signed. Powered by ChargeMate Pay.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="add-new-card-form">
+                <div class="form-group floating-label-group">
+                    <input type="text" id="new-card-name" required placeholder=" ">
+                    <label for="new-card-name">Cardholder Name</label>
+                </div>
+                <div class="form-group floating-label-group">
+                    <input type="text" id="new-card-number" required maxlength="19" placeholder=" ">
+                    <label for="new-card-number">Card Number</label>
+                </div>
+                <div class="form-row">
+                    <div class="form-group floating-label-group">
+                        <input type="text" id="new-card-expiry" required maxlength="5" placeholder=" ">
+                        <label for="new-card-expiry">Expiry Date (MM/YY)</label>
+                    </div>
+                    <div class="form-group floating-label-group">
+                        <input type="password" id="new-card-cvv" required maxlength="3" placeholder=" ">
+                        <label for="new-card-cvv">CVV</label>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 10px; margin-bottom: 20px;">
+                    <label for="new-card-brand" class="field-label">Card Brand</label>
+                    <select id="new-card-brand" class="custom-select" required>
+                        <option value="visa" selected>Visa</option>
+                        <option value="mastercard">MasterCard</option>
+                    </select>
+                </div>
+                <div class="add-card-actions" style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="btn btn-outline btn-sm" id="btn-cancel-add-card">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Save Card</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Wallet Success Modal Overlay -->
+    <div class="modal-overlay" id="wallet-success-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Wallet deposit successful">
+        <div class="success-card wallet-success-card">
+            <div class="success-icon-wrapper">
+                <svg class="success-checkmark" viewBox="0 0 52 52">
+                    <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="success-check" fill="none" d="M14.1 27.2 l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+            
+            <h3 class="success-title">Deposit Successful</h3>
+            <p class="success-message">Successfully recharged your ChargeMate Pay wallet. The new balance is now available for charging sessions.</p>
+            
+            <div class="success-summary-receipt" style="margin-top: 15px;">
+                <div class="receipt-row">
+                    <span class="lbl">Amount Deposited</span>
+                    <span class="val text-teal" id="wallet-receipt-amount">+$10.00</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="lbl">Payment Method</span>
+                    <span class="val" id="wallet-receipt-method">Visa (â€¢â€¢â€¢â€¢ 4321)</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="lbl">New Balance</span>
+                    <span class="val text-highlight" id="wallet-receipt-balance">$133.50</span>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-sm" id="btn-close-wallet-success" style="margin-top: 15px;">Confirm & Done</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-top-row">
+            <!-- Brand & Description & App Store Links -->
+            <div class="footer-brand-section">
+                <a href="#" class="logo">
+                    <span class="logo-dot"></span>
+                    <span>ChargeMate</span>
+                </a>
+                <p class="footer-desc">Designing, deploying, and optimizing the future of zero-emission mobility grids and rapid electric charging infrastructure globally.</p>
+                
+                <div class="footer-download-social-wrap">
+                    <div class="download-badges-vertical">
+                        <a href="#" class="app-download-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.5-1.31.02-1.72-.78-3.22-.78-1.5 0-1.96.75-3.22.8-1.35.05-2.24-1.17-3.09-2.39-1.73-2.51-3.05-7.11-1.26-10.21.89-1.54 2.48-2.51 4.21-2.53 1.31-.02 2.55.89 3.36.89.8 0 2.29-.98 3.84-.83 1.55.06 2.7.62 3.49 1.76-3.15 1.88-2.65 6.23.95 7.7-.63 1.6-1.84 3.03-3.22 3.86M15.9 4.17c.66-.8 1.1-1.92.98-3.03-1 .04-2.22.67-2.94 1.5-.63.72-1.18 1.86-1.04 2.96.14.11.28.17.43.17.8 0 1.91-.77 2.57-1.6z"/></svg>
+                            <div class="btn-text">
+                                <span class="sub">Download on the</span>
+                                <span class="main">App Store</span>
+                            </div>
+                        </a>
+                        <a href="#" class="app-download-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9z"/></svg>
+                            <div class="btn-text">
+                                <span class="sub">Get it on</span>
+                                <span class="main">Google Play</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="social-links-row">
+                        <a href="#" aria-label="X / Twitter" class="social-icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="https://github.com/Mashfi19" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+                        <a href="https://www.linkedin.com/in/mashfi-rahman-2a4040255v" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                        <a href="https://www.facebook.com/mashfirahman.amio" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1V12h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Newsletter Signup Block -->
+            <div class="footer-newsletter-section">
+                <h5>Newsletter</h5>
+                <p class="newsletter-desc">Subscribe to our network announcements and developer bulletins.</p>
+                <form class="footer-newsletter-form" id="footer-newsletter-form">
+                    <div class="newsletter-input-group">
+                        <input type="email" placeholder="Enter your email" required class="newsletter-input">
+                        <button type="submit" class="btn btn-primary btn-newsletter-submit">Subscribe</button>
+                    </div>
+                    <div class="newsletter-feedback" id="newsletter-feedback"></div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-divider"></div>
+        
+        <div class="container footer-links-grid">
+            <!-- Platform Column -->
+            <div class="footer-column footer-links-col">
+                <h5>Platform</h5>
+                <a href="#home">Home Base</a>
+                <a href="#chargers">Charging Hardware</a>
+                <a href="#map">Grid Locator</a>
+                <a href="#calculator">Savings Calculator</a>
+                <a href="#reserve">Fleet Reservations</a>
+            </div>
+
+            <!-- Garage & Planner Column -->
+            <div class="footer-column footer-links-col">
+                <h5>Garage & Planner</h5>
+                <a href="#dashboard">Control Center</a>
+                <a href="#garage">Fleet Garage</a>
+                <a href="#scheduler">Smart Planner</a>
+                <a href="#wallet">Wallet & Payments</a>
+            </div>
+
+            <!-- Developers Column -->
+            <div class="footer-column footer-links-col">
+                <h5>Developers</h5>
+                <a href="#developers" class="dev-link-mock">Developer Portal</a>
+                <a href="#sandbox" class="sandbox-link-mock">API Sandbox</a>
+                <a href="#status" class="status-link-mock">System Status</a>
+                <a href="https://github.com/Mashfi19" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+            </div>
+
+            <!-- Support & Company Column -->
+            <div class="footer-column footer-links-col">
+                <h5>Support & Company</h5>
+                <a href="#about">About Us</a>
+                <a href="#careers">Careers Info</a>
+                <a href="#reserve">Support Hub</a>
+                <a href="#privacy" class="legal-link-mock">Privacy Settings</a>
+            </div>
+        </div>
+        
+        <div class="footer-divider"></div>
+ 
+        <div class="footer-bottom">
+            <div class="container bottom-row-redesign" style="display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+                <!-- Left: Copyright and Legal links stack -->
+                <div class="footer-legal-stack" style="display: flex; flex-direction: column; gap: 12px;">
+                    <p class="copyright" style="margin: 0; font-size: 13px; color: var(--clr-text-muted);">&copy; 2026 ChargeMate Inc. All carbon offsets tracked. All rights reserved.</p>
+                    <div class="legal-links" style="display: flex; gap: 20px; font-size: 13px;">
+                        <a href="#privacy" class="legal-link-mock">Privacy Policy</a>
+                        <a href="#terms" class="legal-link-mock">Terms of Service</a>
+                        <a href="#legal" class="legal-link-mock">Legal Disclosures</a>
+                    </div>
+                </div>
+ 
+                <!-- Right: Meet the Developer Card (Apple-Inspired) -->
+                <div class="developer-card reveal-on-scroll" style="margin: 0;">
+                    <!-- Dynamic glow on hover -->
+                    <div class="dev-card-glow"></div>
+                    <!-- Profile Image Wrapper -->
+                    <div class="dev-avatar-wrapper">
+                        <div class="dev-avatar">
+                            <img src="assets/images/developer.png" alt="Mashfi Rahman" width="682" height="1024" loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <!-- Details & Socials -->
+                    <div class="dev-details">
+                        <span class="dev-label">Full-Stack Developer</span>
+                        <h4 class="dev-name">Mashfi Rahman</h4>
+                        
+                        <!-- Social Row -->
+                        <div class="dev-social-row">
+                            <div class="dev-social-item">
+                                <a href="https://github.com/Mashfi19" target="_blank" rel="noopener noreferrer" aria-label="Visit Mashfi's GitHub" class="dev-social-btn" data-hover-color="#24292e">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                </a>
+                                <span class="dev-tooltip">GitHub</span>
+                            </div>
+                            <div class="dev-social-item">
+                                <a href="https://www.linkedin.com/in/mashfi-rahman-2a4040255v" target="_blank" rel="noopener noreferrer" aria-label="Visit Mashfi's LinkedIn" class="dev-social-btn" data-hover-color="#0077b5">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </a>
+                                <span class="dev-tooltip">LinkedIn</span>
+                            </div>
+                            <div class="dev-social-item">
+                                <a href="https://www.facebook.com/mashfirahman.amio" target="_blank" rel="noopener noreferrer" aria-label="Visit Mashfi's Facebook" class="dev-social-btn" data-hover-color="#1877f2">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </a>
+                                <span class="dev-tooltip">Facebook</span>
+                            </div>
+                            <div class="dev-social-item">
+                                <a href="https://www.instagram.com/mashfi_amio/" target="_blank" rel="noopener noreferrer" aria-label="Visit Mashfi's Instagram" class="dev-social-btn" data-hover-color="#e1306c">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <span class="dev-tooltip">Instagram</span>
+                            </div>
+                            <div class="dev-social-item">
+                                <a href="https://wa.me/8801785658189" target="_blank" rel="noopener noreferrer" aria-label="Message Mashfi on WhatsApp" class="dev-social-btn" data-hover-color="#25d366">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                </a>
+                                <span class="dev-tooltip">WhatsApp</span>
+                            </div>
+                            <div class="dev-social-item">
+                                <a href="https://mashfi19.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" aria-label="View Mashfi's Portfolio website" class="dev-social-btn" data-hover-color="#FF5A36">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                </a>
+                                <span class="dev-tooltip">Portfolio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Profile & Settings Modal Popup -->
+    <div class="auth-overlay" id="profile-settings-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Profile and settings modal">
+        <div class="auth-card" style="max-width: 480px; width: 100%;">
+            <button class="auth-close" id="profile-settings-close" aria-label="Close modal">&times;</button>
+            
+            <h3 class="auth-title">Profile Settings</h3>
+            <p class="auth-subtitle">Update your profile image, username, and account password.</p>
+            
+            <form id="profile-settings-form">
+                <!-- Avatar Upload Section -->
+                <div class="profile-picture-row">
+                    <div class="settings-avatar-preview-container">
+                        <span id="settings-avatar-letter">U</span>
+                        <img id="settings-avatar-image" src="" alt="Profile Image" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="settings-avatar-actions">
+                        <span class="field-label" style="margin-bottom: 2px;">Profile Picture</span>
+                        <span style="font-size: 11px; color: var(--clr-text-muted); margin-bottom: 4px;">PNG or JPG. Max size 2MB.</span>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-outline btn-sm" id="btn-select-avatar">Choose Photo</button>
+                            <button type="button" class="btn btn-outline btn-sm" id="btn-remove-avatar" style="color: var(--clr-red); border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05);">Remove</button>
+                        </div>
+                        <input type="file" id="settings-avatar-input" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+
+                <div class="form-group floating-label-group">
+                    <input type="text" id="settings-username" required placeholder=" ">
+                    <label for="settings-username">Full Name</label>
+                </div>
+
+                <div class="form-group floating-label-group">
+                    <input type="email" id="settings-email" readonly disabled placeholder=" " style="opacity: 0.7; cursor: not-allowed; background-color: var(--clr-bg-alt);">
+                    <label for="settings-email">Email Address (Cannot be changed)</label>
+                </div>
+
+                <div style="margin: 20px 0 10px 0; border-top: 1px solid var(--border-color-light); padding-top: 20px;">
+                    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--clr-text-primary);">Change Password</h4>
+                </div>
+
+                <div class="form-group floating-label-group">
+                    <input type="password" id="settings-password" placeholder=" " autocomplete="new-password">
+                    <label for="settings-password">New Password</label>
+                </div>
+
+                <div class="form-group floating-label-group">
+                    <input type="password" id="settings-confirm-password" placeholder=" " autocomplete="new-password">
+                    <label for="settings-confirm-password">Confirm New Password</label>
+                </div>
+
+                <div class="settings-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+                    <button type="button" class="btn btn-outline btn-sm" id="btn-cancel-settings">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/vehicles.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/scheduler.js" defer></script>
+    <script src="js/wallet.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/calculator.js" defer></script>
+    <script src="js/map.js" defer></script>
+    <script src="js/chargers.js" defer></script>
+    <script src="js/effects.js" defer></script>
+</body>
+</html>
+
